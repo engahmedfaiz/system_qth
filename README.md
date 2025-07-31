@@ -1,30 +1,95 @@
-# Yemen legal ai system
+# النظام القانوني الذكي اليمني
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+هذا المشروع هو نظام قانوني ذكي يهدف إلى مساعدة المحامين والمواطنين في اليمن على تحليل المستندات القانونية وتقديم المشورة باستخدام الذكاء الاصطناعي.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/engahmedfaiz5-1496s-projects/v0-yemen-legal-ai-system)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/spVI92MQXRZ)
+## الميزات
 
-## Overview
+-   **تحليل المستندات:**
+    -   قراءة حقيقية للمستندات (PDF, Word, صور, ملفات نصية).
+    -   استخراج البيانات الأساسية: الأطراف (المدعي، المدعى عليه، الشهود)، التواريخ، المبالغ المالية، المواقع، المصطلحات القانونية، المراجع القانونية.
+    -   تحديد نوع المستند (صحيفة دعوى، عقد بيع، حكم قضائي، إلخ).
+    -   حساب درجة الثقة في الاستخراج.
+-   **التحليل القانوني بالذكاء الاصطناعي:**
+    -   ملخص شامل للقضية بناءً على البيانات المستخرجة.
+    -   تحديد نوع النزاع.
+    -   استخراج المطالبات والدفوع المحتملة.
+    -   البحث عن الأساس الدستوري والقوانين المطبقة والسوابق القضائية ذات الصلة (محاكاة لقاعدة بيانات قانونية).
+    -   تقديم تحليل قانوني مفصل وتوصيات بناءً على البيانات.
+    -   حساب درجة ثقة التحليل الكلية.
+-   **استشارة الخبراء:**
+    -   نظام محاكاة لاختيار خبراء قانونيين متخصصين.
+    -   نظام محاكاة للدردشة مع الخبراء لطلب مشورة إضافية.
+-   **الأمان والخصوصية:**
+    -   معالجة المستندات محليًا في المتصفح (لا يتم رفع الملفات إلى الخوادم).
+    -   حذف تلقائي للبيانات من الذاكرة بعد التحليل.
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+## التقنيات المستخدمة
 
-## Deployment
+-   **Next.js 14 (App Router):** إطار عمل React لبناء تطبيقات الويب.
+-   **React:** لبناء واجهة المستخدم.
+-   **TypeScript:** لضمان جودة الكود وقابلية الصيانة.
+-   **Tailwind CSS:** لتصميم الواجهة بسرعة ومرونة.
+-   **shadcn/ui:** مكونات واجهة مستخدم قابلة للتخصيص مبنية على Tailwind CSS و Radix UI.
+-   **Lucide React:** أيقونات.
+-   **AI SDK (`ai`, `@ai-sdk/openai`):** للتكامل مع نماذج الذكاء الاصطناعي (مثل GPT-4o) لمهام التحليل القانوني وتقديم المشورة.
+-   **`pdf-parse` (محاكاة):** لاستخراج النصوص من ملفات PDF.
+-   **`tesseract.js` (محاكاة):** للتعرف الضوئي على الحروف (OCR) من الصور.
 
-Your project is live at:
+## كيفية التشغيل
 
-**[https://vercel.com/engahmedfaiz5-1496s-projects/v0-yemen-legal-ai-system](https://vercel.com/engahmedfaiz5-1496s-projects/v0-yemen-legal-ai-system)**
+1.  **استنساخ المستودع:**
+    \`\`\`bash
+    git clone <رابط المستودع الخاص بك>
+    cd yemen-legal-ai-system
+    \`\`\`
 
-## Build your app
+2.  **تثبيت التبعيات:**
+    \`\`\`bash
+    npm install
+    # أو
+    yarn install
+    # أو
+    pnpm install
+    \`\`\`
 
-Continue building your app on:
+3.  **إعداد متغيرات البيئة:**
+    للتكامل مع OpenAI (أو أي مزود AI آخر عبر AI SDK)، ستحتاج إلى مفتاح API.
+    أنشئ ملف `.env.local` في الجذر المشروع وأضف مفتاح API الخاص بك:
+    \`\`\`
+    OPENAI_API_KEY=your_openai_api_key_here
+    \`\`\`
+    **ملاحظة:** في بيئة الإنتاج (مثل Vercel)، ستحتاج إلى تعيين هذا المتغير في إعدادات المشروع.
 
-**[https://v0.dev/chat/projects/spVI92MQXRZ](https://v0.dev/chat/projects/spVI92MQXRZ)**
+4.  **تشغيل التطبيق:**
+    \`\`\`bash
+    npm run dev
+    # أو
+    yarn dev
+    # أو
+    pnpm dev
+    \`\`\`
+    سيتم تشغيل التطبيق على `http://localhost:3000`.
 
-## How It Works
+## هيكل المشروع
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+-   `app/`: يحتوي على صفحات Next.js الرئيسية (مثل `page.tsx`, `layout.tsx`).
+-   `components/`: مكونات React القابلة لإعادة الاستخدام (بما في ذلك مكونات shadcn/ui).
+-   `lib/`: ملفات المنطق الأساسي، مثل:
+    -   `document-analyzer.ts`: لاستخراج وتحليل البيانات من المستندات.
+    -   `legal-analyzer.ts`: للتحليل القانوني الشامل باستخدام الذكاء الاصطناعي.
+    -   `yemeni-constitution.ts`: قاعدة بيانات محاكاة للدستور اليمني.
+    -   `legal-database.ts`: قاعدة بيانات محاكاة للقوانين والسوابق القضائية.
+    -   `pdf-reader.ts`: محاكاة لقارئ PDF.
+    -   `image-ocr.ts`: محاكاة لـ OCR الصور.
+-   `public/`: الأصول الثابتة مثل الصور.
+-   `styles/`: ملفات CSS.
+
+## ملاحظات هامة
+
+-   **محاكاة OCR وقراءة PDF:** في هذا المشروع، تم استخدام محاكاة لعمليات OCR وقراءة PDF لتبسيط العرض. في تطبيق حقيقي، ستحتاج إلى دمج مكتبات قوية مثل `pdf-parse` (لـ Node.js) أو `PDF.js` (للمتصفح) لملفات PDF، و `Tesseract.js` أو خدمات OCR السحابية (مثل Azure Form Recognizer، Google Cloud Vision AI) للصور.
+-   **قواعد البيانات القانونية:** قواعد بيانات الدستور والقوانين والسوابق القضائية هي محاكاة بسيطة. في تطبيق حقيقي، ستحتاج إلى قاعدة بيانات حقيقية (مثل PostgreSQL, MongoDB) تحتوي على بيانات قانونية شاملة ومنظمة.
+-   **نماذج الذكاء الاصطناعي:** يتم استخدام `openai("gpt-4o")` كمثال. يمكنك تبديل النموذج أو المزود بسهولة باستخدام AI SDK.
+
+## المساهمة
+
+نرحب بالمساهمات! إذا كان لديك أي اقتراحات أو تحسينات، فلا تتردد في فتح مشكلة (issue) أو إرسال طلب سحب (pull request).

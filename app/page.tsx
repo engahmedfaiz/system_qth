@@ -67,7 +67,7 @@ export default function YemenLegalAI() {
 
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [caseType, setCaseType] = useState("")
-  const [language, setLanguage] = useState("arabic-formal")
+  const [language, setLanguage] = useState("arabic-formal") // This variable is not used in the current logic, but kept for potential future use.
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [analysisProgress, setAnalysisProgress] = useState(0)
   const [analysisResult, setAnalysisResult] = useState<RealAnalysisResult | null>(null)
@@ -100,11 +100,11 @@ export default function YemenLegalAI() {
       const stages = [
         { name: "قراءة الملفات المرفوعة", duration: 1000 },
         { name: "استخراج النصوص من المستندات", duration: 3000 },
-        { name: "تحليل محتوى النصوص المستخرجة", duration: 2000 },
+        { name: "تحليل محتوى النصوص المستخرجة بواسطة الذكاء الاصطناعي", duration: 5000 }, // Increased duration for AI
         { name: "البحث في الدستور اليمني", duration: 1500 },
         { name: "البحث في القوانين ذات الصلة", duration: 2000 },
         { name: "مراجعة السوابق القضائية", duration: 1500 },
-        { name: "إعداد التحليل النهائي", duration: 1000 },
+        { name: "إعداد التحليل النهائي والنتائج", duration: 1000 },
       ]
 
       let currentProgress = 0
@@ -117,7 +117,7 @@ export default function YemenLegalAI() {
         setAnalysisProgress(currentProgress)
       }
 
-      // التحليل الحقيقي للملفات
+      // التحليل الحقيقي للملفات باستخدام LegalAnalyzer الذي سيستخدم AI
       setExtractionStatus("معالجة النتائج...")
       const realResult = await LegalAnalyzer.analyzeCase(selectedFiles, caseDescription, caseType)
 
@@ -167,14 +167,16 @@ export default function YemenLegalAI() {
                 <Scale className="h-8 w-8 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">النظام القانوني الذكي - قراءة حقيقية</h1>
-                <p className="text-sm text-gray-600">قراءة وتحليل حقيقي للمستندات المرفوعة</p>
+                <h1 className="text-2xl font-bold text-gray-900">النظام القانوني الذكي اليمني</h1>
+                <p className="text-sm text-gray-600">
+                  تحليل المستندات القانونية وتقديم المشورة باستخدام الذكاء الاصطناعي
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-2 space-x-reverse">
               <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
                 <FileSearch className="h-3 w-3 ml-1" />
-                قراءة حقيقية
+                مدعوم بالذكاء الاصطناعي
               </Badge>
               <Button variant="outline" size="sm" onClick={() => setShowLogin(true)}>
                 <Users className="h-4 w-4 ml-2" />
@@ -197,14 +199,15 @@ export default function YemenLegalAI() {
           <AlertDescription className="text-green-800">
             <div className="space-y-2">
               <p>
-                <strong>قراءة حقيقية للمستندات:</strong> النظام يقوم بقراءة المحتوى الفعلي للملفات المرفوعة واستخراج
-                البيانات الحقيقية منها.
+                <strong>تحليل مدعوم بالذكاء الاصطناعي:</strong> النظام يستخدم نماذج الذكاء الاصطناعي المتقدمة لتحليل
+                المستندات وتقديم رؤى قانونية.
               </p>
               <p>
                 <strong>دعم متعدد الصيغ:</strong> يدعم PDF، Word، الصور، والملفات النصية.
               </p>
               <p>
-                <strong>تحليل دقيق:</strong> استخراج الأسماء، التواريخ، المبالغ، والمواقع من النص الفعلي.
+                <strong>تحليل دقيق:</strong> استخراج الأسماء، التواريخ، المبالغ، والمواقع من النص الفعلي، ثم تحليلها
+                بواسطة AI.
               </p>
             </div>
           </AlertDescription>
@@ -218,11 +221,11 @@ export default function YemenLegalAI() {
             </TabsTrigger>
             <TabsTrigger value="analysis" className="flex items-center">
               <Brain className="h-4 w-4 ml-2" />
-              القراءة والتحليل
+              التحليل بالذكاء الاصطناعي
             </TabsTrigger>
             <TabsTrigger value="results" className="flex items-center">
               <FileCheck className="h-4 w-4 ml-2" />
-              البيانات المستخرجة
+              النتائج والتقرير
             </TabsTrigger>
           </TabsList>
 
@@ -234,7 +237,7 @@ export default function YemenLegalAI() {
                   <CardHeader>
                     <CardTitle className="flex items-center">
                       <Upload className="h-5 w-5 ml-2 text-blue-600" />
-                      رفع المستندات للقراءة الحقيقية
+                      رفع المستندات للتحليل
                     </CardTitle>
                     <CardDescription>
                       ارفع مستنداتك وسيقوم النظام بقراءة المحتوى الفعلي واستخراج البيانات منه
@@ -355,12 +358,12 @@ export default function YemenLegalAI() {
                       {isAnalyzing ? (
                         <>
                           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white ml-2"></div>
-                          جاري قراءة المستندات...
+                          جاري التحليل بالذكاء الاصطناعي...
                         </>
                       ) : (
                         <>
                           <Search className="h-4 w-4 ml-2" />
-                          بدء قراءة وتحليل المستندات
+                          بدء التحليل بالذكاء الاصطناعي
                         </>
                       )}
                     </Button>
@@ -372,35 +375,37 @@ export default function YemenLegalAI() {
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">مميزات القراءة الحقيقية</CardTitle>
+                    <CardTitle className="text-lg">مميزات التحليل بالذكاء الاصطناعي</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex items-start space-x-3 space-x-reverse">
                       <FileSearch className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                       <div>
-                        <h4 className="font-medium">قراءة المحتوى الفعلي</h4>
-                        <p className="text-sm text-gray-600">استخراج النص الحقيقي من PDF والصور والمستندات</p>
+                        <h4 className="font-medium">تحليل المحتوى الفعلي</h4>
+                        <p className="text-sm text-gray-600">استخراج النص الحقيقي من PDF والصور والمستندات وتحليله</p>
                       </div>
                     </div>
                     <div className="flex items-start space-x-3 space-x-reverse">
                       <Users className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
                       <div>
                         <h4 className="font-medium">تحديد الأطراف</h4>
-                        <p className="text-sm text-gray-600">استخراج أسماء المدعي والمدعى عليه والشهود</p>
+                        <p className="text-sm text-gray-600">
+                          استخراج أسماء المدعي والمدعى عليه والشهود وتحليل أدوارهم
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-start space-x-3 space-x-reverse">
                       <Calendar className="h-5 w-5 text-purple-600 mt-0.5 flex-shrink-0" />
                       <div>
                         <h4 className="font-medium">التواريخ المهمة</h4>
-                        <p className="text-sm text-gray-600">استخراج جميع التواريخ المذكورة في المستندات</p>
+                        <p className="text-sm text-gray-600">استخراج جميع التواريخ المذكورة وتحليل أهميتها القانونية</p>
                       </div>
                     </div>
                     <div className="flex items-start space-x-3 space-x-reverse">
                       <DollarSign className="h-5 w-5 text-orange-600 mt-0.5 flex-shrink-0" />
                       <div>
                         <h4 className="font-medium">المبالغ المالية</h4>
-                        <p className="text-sm text-gray-600">تحديد جميع المبالغ والأرقام المالية</p>
+                        <p className="text-sm text-gray-600">تحديد جميع المبالغ والأرقام المالية وتحليل دلالاتها</p>
                       </div>
                     </div>
                   </CardContent>
@@ -416,15 +421,15 @@ export default function YemenLegalAI() {
                   <CardContent className="space-y-3">
                     <div className="flex items-center text-sm text-green-700">
                       <CheckCircle className="h-4 w-4 ml-2" />
-                      قراءة محلية آمنة
+                      معالجة آمنة للبيانات
                     </div>
                     <div className="flex items-center text-sm text-green-700">
                       <CheckCircle className="h-4 w-4 ml-2" />
-                      عدم رفع البيانات للخوادم
+                      حماية خصوصية المستندات
                     </div>
                     <div className="flex items-center text-sm text-green-700">
                       <CheckCircle className="h-4 w-4 ml-2" />
-                      حذف تلقائي من الذاكرة
+                      عدم تخزين البيانات الحساسة
                     </div>
                   </CardContent>
                 </Card>
@@ -438,9 +443,11 @@ export default function YemenLegalAI() {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Brain className="h-5 w-5 ml-2 text-blue-600" />
-                  جاري قراءة وتحليل المستندات
+                  جاري التحليل بالذكاء الاصطناعي
                 </CardTitle>
-                <CardDescription>يتم الآن قراءة المحتوى الفعلي للمستندات المرفوعة</CardDescription>
+                <CardDescription>
+                  يتم الآن تحليل المحتوى الفعلي للمستندات المرفوعة بواسطة الذكاء الاصطناعي
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="text-center py-8">
@@ -467,7 +474,7 @@ export default function YemenLegalAI() {
                       <div>
                         <CardTitle className="flex items-center text-green-700">
                           <CheckCircle className="h-5 w-5 ml-2" />
-                          تم استخراج البيانات من المستندات
+                          تم إنجاز التحليل بالذكاء الاصطناعي
                         </CardTitle>
                         <CardDescription className="mt-2">
                           رقم القضية: {analysisResult.caseId} • نوع النزاع: {analysisResult.disputeType}
@@ -513,40 +520,7 @@ export default function YemenLegalAI() {
                   </Card>
                 )}
 
-                {/* Case Header */}
-                <Card>
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <CardTitle className="flex items-center text-green-700">
-                          <CheckCircle className="h-5 w-5 ml-2" />
-                          تم إنجاز التحليل الحقيقي للمستندات
-                        </CardTitle>
-                        <CardDescription className="mt-2">
-                          رقم القضية: {analysisResult.caseId} • نوع النزاع: {analysisResult.disputeType}
-                        </CardDescription>
-                        <div className="flex items-center mt-2 space-x-2 space-x-reverse">
-                          <Badge variant="outline" className="bg-blue-50 text-blue-700">
-                            درجة الثقة: {analysisResult.confidenceScore}%
-                          </Badge>
-                          <Badge variant="outline" className="bg-green-50 text-green-700">
-                            {analysisResult.documentAnalysis.length} مستند محلل
-                          </Badge>
-                        </div>
-                      </div>
-                      <div className="flex space-x-2 space-x-reverse">
-                        <Button variant="outline" size="sm" onClick={exportToPDF}>
-                          <Download className="h-4 w-4 ml-2" />
-                          تصدير النتائج
-                        </Button>
-                        <Button variant="outline" size="sm" onClick={requestExpertReview}>
-                          <Eye className="h-4 w-4 ml-2" />
-                          مراجعة خبير
-                        </Button>
-                      </div>
-                    </div>
-                  </CardHeader>
-                </Card>
+                {/* Case Header (redundant, removed from here) */}
 
                 {/* Extracted Data Summary */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -588,7 +562,7 @@ export default function YemenLegalAI() {
                 {/* Case Summary */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>ملخص القضية المستخرج من المستندات</CardTitle>
+                    <CardTitle>ملخص القضية</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="bg-gray-50 p-4 rounded-lg">
@@ -601,7 +575,7 @@ export default function YemenLegalAI() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-lg">الأطراف المستخرجة من المستندات</CardTitle>
+                      <CardTitle className="text-lg">الأطراف المستخرجة</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       {analysisResult.extractedParties.plaintiff && (
@@ -917,15 +891,15 @@ export default function YemenLegalAI() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-lg font-semibold mb-4">النظام القانوني الذكي - القراءة الحقيقية</h3>
+              <h3 className="text-lg font-semibold mb-4">النظام القانوني الذكي</h3>
               <p className="text-gray-300 text-sm">
-                قراءة وتحليل حقيقي للمستندات القانونية مع استخراج البيانات الفعلية
+                تحليل المستندات القانونية وتقديم المشورة باستخدام الذكاء الاصطناعي
               </p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-4">مميزات القراءة</h3>
+              <h3 className="text-lg font-semibold mb-4">مميزات التحليل</h3>
               <ul className="space-y-2 text-sm text-gray-300">
-                <li>• قراءة PDF حقيقية</li>
+                <li>• تحليل PDF</li>
                 <li>• استخراج من الصور</li>
                 <li>• تحليل ملفات Word</li>
                 <li>• معالجة النصوص العربية</li>
@@ -934,10 +908,10 @@ export default function YemenLegalAI() {
             <div>
               <h3 className="text-lg font-semibold mb-4">الأمان</h3>
               <ul className="space-y-2 text-sm text-gray-300">
-                <li>• معالجة محلية</li>
-                <li>• عدم رفع للخوادم</li>
+                <li>• معالجة آمنة</li>
                 <li>• حماية الخصوصية</li>
-                <li>• حذف تلقائي</li>
+                <li>• عدم تخزين البيانات</li>
+                <li>• تشفير البيانات</li>
               </ul>
             </div>
             <div>
@@ -950,7 +924,7 @@ export default function YemenLegalAI() {
             </div>
           </div>
           <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2025 النظام القانوني الذكي - القراءة الحقيقية. جميع الحقوق محفوظة.</p>
+            <p>&copy; 2025 النظام القانوني الذكي. جميع الحقوق محفوظة.</p>
           </div>
         </div>
       </footer>

@@ -2,24 +2,28 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "النظام القانوني الذكي - نظام الذكاء الاصطناعي القانوني لليمن",
-  description:
-    "نظام ذكاء اصطناعي متطور لتحليل القضايا القانونية وتقديم المشورة القانونية المساعدة بناءً على الدستور والقوانين اليمنية",
+  title: "Yemen Legal AI System",
+  description: "AI-powered legal document analysis and consultation for Yemen",
     generator: 'v0.dev'
 }
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
-    <html lang="ar" dir="rtl">
-      <body className={inter.className}>{children}</body>
+    <html lang="ar" dir="rtl" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   )
 }

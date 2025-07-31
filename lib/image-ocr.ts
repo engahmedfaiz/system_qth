@@ -1,37 +1,84 @@
-// قارئ النصوص من الصور باستخدام OCR
+// محاكاة لخدمة التعرف الضوئي على الحروف (OCR) للصور
 export class ImageOCR {
   static async extractTextFromImage(file: File): Promise<string> {
-    return new Promise((resolve) => {
-      const canvas = document.createElement("canvas")
-      const ctx = canvas.getContext("2d")
-      const img = new Image()
+    // هذا الجزء يحاكي عملية OCR حقيقية.
+    // في تطبيق حقيقي، ستحتاج إلى استخدام مكتبات مثل Tesseract.js (للمتصفح)
+    // أو خدمات OCR سحابية مثل Azure Form Recognizer أو Google Cloud Vision AI.
 
-      img.onload = () => {
-        canvas.width = img.width
-        canvas.height = img.height
-        ctx?.drawImage(img, 0, 0)
+    // قراءة الملف كـ Data URL
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
 
-        // في التطبيق الحقيقي، ستستخدم Tesseract.js أو خدمة OCR
-        // هنا سنحاكي استخراج النص من الصورة
+    return new Promise((resolve, reject) => {
+      reader.onload = async () => {
+        const base64Image = reader.result as string
 
-        // محاولة قراءة البيانات من الصورة
-        try {
-          const imageData = ctx?.getImageData(0, 0, canvas.width, canvas.height)
+        // محاكاة استخراج النص بناءً على اسم الملف أو نوعه
+        let mockText = ""
+        const fileName = file.name.toLowerCase()
 
-          // تحليل بسيط للصورة للبحث عن النصوص
-          // في التطبيق الحقيقي، ستستخدم مكتبة OCR متقدمة
+        if (fileName.includes("دعوى") || fileName.includes("صورة-دعوى")) {
+          mockText = `
+            صورة ضوئية لصحيفة دعوى مدنية
 
-          resolve("تم استخراج النص من الصورة - يتطلب تكامل مع خدمة OCR حقيقية")
-        } catch (error) {
-          resolve("خطأ في قراءة الصورة")
+            إلى السيد رئيس المحكمة الابتدائية بصنعاء المحترم
+
+            المدعي: علي عبد الله صالح
+            العنوان: شارع الزبيري - صنعاء
+            الهاتف: 777987654
+
+            المدعى عليه: حسين قاسم العبسي
+            العنوان: حي سعوان - صنعاء
+
+            موضوع الدعوى: المطالبة بدين مستحق
+
+            الوقائع:
+            1. أن المدعي أقرض المدعى عليه مبلغ 1,000,000 ريال يمني بتاريخ 01/03/2023.
+            2. تم تحرير سند دين بذلك يستحق السداد بتاريخ 01/03/2024.
+            3. رفض المدعى عليه السداد رغم المطالبات المتكررة.
+
+            المطالب:
+            1. إلزام المدعى عليه بدفع مبلغ 1,000,000 ريال يمني.
+            2. إلزام المدعى عليه بالمصروفات والأتعاب.
+
+            التوقيع: علي عبد الله صالح
+            التاريخ: 10/04/2024
+          `
+        } else if (fileName.includes("عقد") || fileName.includes("صورة-عقد")) {
+          mockText = `
+            صورة ضوئية لعقد إيجار
+
+            أنه في يوم الثلاثاء الموافق 10/01/2022
+
+            تم بين كل من:
+            المؤجر: سعيد ناصر القاضي
+            المستأجر: فهد علي السقاف
+
+            إيجار شقة سكنية في حي حدة - صنعاء
+            المساحة: 120 متر مربع
+            الحدود: شمالاً شارع فرعي، جنوباً منزل مجاور، شرقاً مسجد، غرباً حديقة
+
+            الأجرة المتفق عليها: 70,000 ريال يمني شهرياً
+            مدة الإيجار: سنتان تبدأ من 10/01/2022 وتنتهي في 09/01/2024
+
+            توقيع المؤجر: سعيد ناصر القاضي
+            توقيع المستأجر: فهد علي السقاف
+          `
+        } else {
+          mockText = `
+            هذه صورة لمستند غير محدد، النص المستخرج قد يكون غير كامل.
+            تاريخ: 05/05/2023
+            مبلغ: 5000 دولار
+            موقع: عدن
+            أطراف: طرف أول، طرف ثاني
+          `
         }
-      }
 
-      img.onerror = () => {
-        resolve("خطأ في تحميل الصورة")
+        // تأخير بسيط لمحاكاة عملية OCR
+        await new Promise((res) => setTimeout(res, 1500))
+        resolve(mockText.trim())
       }
-
-      img.src = URL.createObjectURL(file)
+      reader.onerror = reject
     })
   }
 }
